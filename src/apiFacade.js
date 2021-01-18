@@ -37,6 +37,22 @@ const getRole = () => {
   return localStorage.getItem("role");
 };
 
+const setUser = (name) => {
+  localStorage.setItem("name", name.username);
+};
+
+const getUser = () => {
+  return localStorage.getItem("name");
+};
+
+const parseUser = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch (e) {
+    return null;
+  }
+};
+
 function apiFacade() {
   /* Insert utility-methods from a latter step (d) here (REMEMBER to uncomment in the returned object when you do)*/
 
@@ -50,16 +66,8 @@ function apiFacade() {
       .then((res) => {
         setToken(res.token);
         setRole(parseRole(res.token));
+        setUser(parseUser(res.token));
       });
-  };
-  const fetchSwabiData = () => {
-    const options = makeOptions("GET", true); //True add's the token
-    return fetch(URL + "/api/info/swabi", options).then(handleHttpErrors);
-  };
-
-  const fetchJokesData = () => {
-    const options = makeOptions("GET", true); //True add's the token
-    return fetch(URL + "/api/info/jokes", options).then(handleHttpErrors);
   };
 
   const fetchUserData = () => {
@@ -67,6 +75,37 @@ function apiFacade() {
     return fetch(URL + "/api/info/" + getRole(), options).then(
       handleHttpErrors
     );
+  };
+  const fetchProductData = (search) => {
+    const options = makeOptions("GET", true); //True add's the token
+    return fetch(URL + "/api/products/" + search, options).then(handleHttpErrors);
+  };
+  
+  const fetchProductsOnSale = () => {
+    const options = makeOptions("GET", true); //True add's the token
+    return fetch(URL + "/api/products/offers", options).then(handleHttpErrors);
+  };
+
+  const fetchCategoriesData = (category) => {
+    const options = makeOptions("GET", true); //True add's the token
+    return fetch(URL + "/api/products/categories/"+ category, options).then(handleHttpErrors);
+  };
+
+  const fetchAddUser = (user) => {
+    const options = makeOptions("POST", true, user); //True add's the token
+    return fetch(URL + "/api/contact", options).then(handleHttpErrors);
+  };
+  const fetchEditUser = (user) => {
+    const options = makeOptions("PUT", true, user); //True add's the token
+    return fetch(URL + "/api/contact", options).then(handleHttpErrors);
+  };
+  const fetchGetallUsers = () => {
+    const options = makeOptions("GET", true); //True add's the token
+    return fetch(URL + "/api/info/alls", options).then(handleHttpErrors);
+  };
+  const fetchDeleteUser = (id) => {
+    const options = makeOptions("DELETE", true, id); //True add's the token
+    return fetch(URL + "/api/contact/" + id, options).then(handleHttpErrors);
   };
 
   const makeOptions = (method, addToken, body) => {
@@ -92,9 +131,16 @@ function apiFacade() {
     loggedIn,
     login,
     logout,
-    fetchSwabiData,
-    fetchJokesData,
     fetchUserData,
+    fetchProductData, 
+    fetchProductsOnSale,
+    fetchCategoriesData, 
+    fetchAddUser,
+    fetchEditUser,
+    fetchGetallUsers,
+    fetchDeleteUser,
+    getRole,
+    getUser,
   };
 }
 const facade = apiFacade();

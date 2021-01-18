@@ -1,6 +1,7 @@
-import Swabi from "./swabi";
-import Jokes from "./Jokes";
 import User from "./user";
+import AddUser from "./AddUser";
+import Users from "./Users";
+import EditUser from "./editUser";
 import Home from "./home";
 import { Link, NavLink, Route, Switch } from "react-router-dom";
 
@@ -16,11 +17,14 @@ export default function Menu() {
             <NavLink activeClassName="active" to="/user">User</NavLink>
           </li>
           <li>
-            <NavLink activeClassName="active" to="/jokes">Jokes</NavLink>
+            <NavLink activeClassName="active" to="/adduser">Add user</NavLink>
           </li>
           <li>
-            <NavLink activeClassName="active" to="/swabi">Swabi</NavLink>
+            <NavLink activeClassName="active" to="/edituser">Edit User</NavLink>
           </li>
+          <li>
+                <NavLink activeClassName="active" to="/users">See all users</NavLink>
+              </li>
         </ul>
       </nav>
 
@@ -31,12 +35,15 @@ export default function Menu() {
         <Route path="/user">
           <User />
         </Route>
-        <Route path="/jokes">
-          <Jokes />
+        <Route path="/adduser">
+          <AddUser />  
+          </Route>
+          <Route path="/edituser">
+          <EditUser />
         </Route>
-        <Route path="/swabi">
-          <Swabi />
-        </Route>
+          <Route path="/users">
+          <Users />
+          </Route>
       </Switch>
     </div>
   );
