@@ -35,7 +35,9 @@ const Users = () => {
                                     <td>{user.id}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
-                                    <td>{user.phoneNumber}</td>
+                                    <td>{user.company}</td>
+                                    <td>{user.jobtitle}</td>
+                                    <td>{user.phone}</td>
                                     <td>{usersData && <button className="button buttonCategory buttonSort" onClick={() => handleDeleteUser(user.id)}>DELETE</button>}</td>
                                 </tr>
                             </table>
